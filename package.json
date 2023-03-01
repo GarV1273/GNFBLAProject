@@ -1,0 +1,27 @@
+{
+  "name": "fbla-candp",
+  "version": "1.0.0",
+  "description": "The coding and programming fbla project",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirmaha/FBLA-CandP.git"
+  },
+  "author": "Nirmaha Mukherjee and Gavin Sutherland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nirmaha/FBLA-CandP/issues"
+  },
+  "homepage": "https://github.com/nirmaha/FBLA-CandP#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.3",
+    "nodemon": "^2.0.20"
+  }
+}
