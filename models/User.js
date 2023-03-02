@@ -12,7 +12,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     }
-})
+});
 
 UserSchema.pre('save', function(next) {
     const user = this;
