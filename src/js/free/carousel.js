@@ -1,7 +1,6 @@
 import { getjQuery, onDOMContentLoaded } from '../mdb/util/index';
 import EventHandler from '../mdb/dom/event-handler';
 import SelectorEngine from '../mdb/dom/selector-engine';
-import Manipulator from '../mdb/dom/manipulator';
 import BSCarousel from '../bootstrap/mdb-prefix/carousel';
 
 /**
@@ -79,7 +78,7 @@ class Carousel extends BSCarousel {
 SelectorEngine.find(SELECTOR_DATA_RIDE).forEach((el) => {
   let instance = Carousel.getInstance(el);
   if (!instance) {
-    instance = new Carousel(el, Manipulator.getDataAttributes(el));
+    instance = new Carousel(el);
   }
 });
 
