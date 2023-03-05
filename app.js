@@ -15,6 +15,6 @@ app.set('view engine', 'ejs');
 
 app.listen(process.env.PORT || 3000);
 
-app.get("/GNFBLA", (req, res) => {
+app.get("/FBLA", (req, res) => {
     res.render('index');
 });
