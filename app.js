@@ -21,3 +21,28 @@ app.get("/FBLA", (req, res) => {
     res.render('index');
     console.log("rendered");
 });
+
+app.get("/FBLA/dashboard", (req, res) => {
+    res.render('dashboard');
+    console.log("rendered");
+});
+
+app.get("/FBLA/events", (req, res) => {
+    res.render('events');
+    console.log("rendered");
+});
+
+app.get("/FBLA/assign-points", (req, res) => {
+    res.render('assignPoints');
+    console.log("rendered");
+});
+
+app.get("/FBLA/reports", (req, res) => {
+    res.render('reports');
+    console.log("rendered");
+});
+
+app.get("/FBLA/winner", (req, res) => {
+    res.render('winner');
+    console.log("rendered");
+});

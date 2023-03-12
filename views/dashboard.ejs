@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/head'); %>
+
+  <body>
+
+    <%- include('./partials/header'); %>
+
+      <%- include('./partials/sidebar'); %>
+
+        <main id="main" class="main">
+
+          <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+              </ol>
+            </nav>
+          </div><!-- End Page Title -->
+
+          <!-- Begin event cards  -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Events</h5>
+
+              <!-- Default List group -->
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="card">
+                    <div class="card-body">
+                      <h1 class="card-title">Event Name</h1>
+                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
+                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
+                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
+                      dolore odio impedit facilis eveniet voluptatibus.
+                      <br><br>
+                      <a href="#"><button class="btn btn-primary">Add a Student</button></a>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card">
+                    <div class="card-body">
+                      <h1 class="card-title">Event Name 2 </h1>
+                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
+                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
+                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
+                      dolore odio impedit facilis eveniet voluptatibus.
+                      <br><br>
+                      <a href="#"><button class="btn btn-primary">Add a Student</button></a>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="card">
+                    <div class="card-body">
+                      <h1 class="card-title">Event Name 3</h1>
+                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
+                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
+                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
+                      dolore odio impedit facilis eveniet voluptatibus.
+                      <br><br>
+                      <a href="#"><button class="btn btn-primary">Add a Student</button></a>
+                    </div>
+                  </div>
+                </li>
+              </ul><!-- End Default List group -->
+              <a href="/FBLA/events"><button class="btn btn-primary">View All Events</button></a>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="d-grid">
+                <button class="btn btn-primary" type="button" onclick="window.location.href='/FBLA/reports';">Generate Report</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="d-grid">
+                <button class="btn btn-primary" type="button" onclick="window.location.href='/FBLA/winner';">Assign Winners</button>
+              </div>
+            </div>
+          </div>
+        </main><!-- End #main -->
+
+        <%- include('./partials/footer'); %>
+
+  </body>
+
+</html>
