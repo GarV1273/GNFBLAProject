@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const School = require('./School');
 
 const UserSchema = new Schema({
     username: {
@@ -11,6 +12,16 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    id: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    school: {
+        type: School,
+        required: true,
+        unique: true
     }
 });
 
