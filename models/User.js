@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-const School = require('./School');
 
-const UserSchema = new Schema({
+const TeacherSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -19,13 +18,13 @@ const UserSchema = new Schema({
         unique: true
     },
     school: {
-        type: School,
+        type: String,
         required: true,
         unique: true
     }
 });
 
-UserSchema.pre('save', function(next) {
+TeacherSchema.pre('save', function(next) {
     const user = this;
     bcrypt.hash(user.password, 10, (error, hash) => {
         user.password = hash;
@@ -33,5 +32,5 @@ UserSchema.pre('save', function(next) {
     });
 });
 
-const User = mongoose.model('User', UserSchema);
-module.exports = User;
+const Teacher = mongoose.model('User', TeacherSchema);
+module.exports = Teacher;
