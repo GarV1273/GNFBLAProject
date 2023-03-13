@@ -5,7 +5,7 @@ const app = new express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('./models/User.js');
+const User = require('./models/Teacher.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));

@@ -6,6 +6,12 @@ const SchoolSchema = new Schema({
         type: String,
         unique: true,
         required: true
+    },
+    students: {
+
+    },
+    events: {
+        
     }
 });
 
