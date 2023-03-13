@@ -11,11 +11,27 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/FBLA/events">
-        <i class="bi bi-calendar-check"></i>
-        <span>Events</span>
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check"></i><span>Events</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li> <!-- End Event Link -->
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="/FBLA/events">
+            <i class="bi bi-circle"></i><span>View Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="/FBLA/addEvent">
+            <i class="bi bi-circle"></i><span>Add Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="/FBLA/editEvent">
+            <i class="bi bi-circle"></i><span>Edit Events</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Forms Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="/FBLA/assign-points">

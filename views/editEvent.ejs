@@ -12,25 +12,26 @@
         <main id="main" class="main">
 
           <div class="pagetitle">
-            <h1>Points</h1>
+            <h1>Edit Event</h1>
             <nav>
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Points</li>
+                <li class="breadcrumb-item"><a href="/FBLA/dashboard">Home</a></li>
+                <li class="breadcrumb-item "><a href="/FBLA/events">Events</a></li>
+                <li class="breadcrumb-item active">Edit Event</li>
               </ol>
             </nav>
           </div><!-- End Page Title -->
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Award Points</h5>
+              <h5 class="card-title">Edit Event</h5>
 
               <!-- Vertical Form -->
               <form class="row g-3">
                 <div class="col-12">
-                  <label for="eventName" class="form-label">Event Name</label>
+                  <label for="eventNameEdit" class="form-label">Event Name</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Event selection" id="eventName" name="eventName" required>
+                    <select class="form-select" aria-label="Event selection" id="eventNameEdit" name="eventNameEdit" required>
                       <option selected>(Select Event)</option>
                       <option value="1">Event1</option>
                       <option value="2">Event2</option>
@@ -39,16 +40,12 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <label for="inputAddress" class="form-label">Points</label>
-                  <input type="number" class="form-control" id="points" name="points" required>
+                  <label for="pointsEdit" class="form-label">Points</label>
+                  <input type="number" class="form-control" id="pointsEdit" name="pointsEdit" required>
                 </div>
                 <div class="col-12">
-                  <label for="studentName" class="form-label">Student Name</label>
-                  <input type="text" class="form-control" id="studentName" name="studentName" required>
-                </div>
-                <div class="col-12">
-                  <label for="grade" class="form-label">Grade</label>
-                  <input type="number" max="12" class="form-control" id="grade" name="grade" required>
+                  <label for="eventDate" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="eventDate" name="eventDate" required>
                 </div>
                 
                 <div class="text-center">

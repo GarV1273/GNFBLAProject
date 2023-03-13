@@ -32,6 +32,16 @@ app.get("/FBLA/events", (req, res) => {
     console.log("rendered");
 });
 
+app.get("/FBLA/addEvent", (req, res) => {
+    res.render('addEvent');
+    console.log("rendered");
+});
+
+app.get("/FBLA/editEvent", (req, res) => {
+    res.render('editEvent');
+    console.log("rendered");
+});
+
 app.get("/FBLA/assign-points", (req, res) => {
     res.render('assignPoints');
     console.log("rendered");

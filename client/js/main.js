@@ -318,3 +318,7 @@
   }
 
 })();
+
+function showWinnerTable() {
+  document.getElementById("winnerTable").style.display = "table";
+};
