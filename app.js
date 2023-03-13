@@ -5,7 +5,10 @@ const app = new express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('./models/Teacher.js');
+const Teacher = require('./models/Teacher.js');
+const Event = require('./models/Event.js');
+
+// TODO create a new cluster on MongoDB
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -55,4 +58,15 @@ app.get("/FBLA/reports", (req, res) => {
 app.get("/FBLA/winner", (req, res) => {
     res.render('winner');
     console.log("rendered");
+});
+
+app.post("/FBLA/AddEvent", (req, res) => {
+    Event.create(req.body, (err, data) => {
+        res.redirect('/FBLA/events');
+    });
+});
+
+app.post("/FBLA/EditEvent", (req, res) => {
+    // TODO: Finish this
+    Event.findOneAndUpdate();
 });
