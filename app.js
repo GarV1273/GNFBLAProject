@@ -9,6 +9,9 @@ const Teacher = require('./models/Teacher.js');
 const Event = require('./models/Event.js');
 
 // TODO create a new cluster on MongoDB
+const username = encodeURIComponent('fbla');
+const password = encodeURIComponent('Xtxg5EnaFVHoQ9Xs');
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb.net/userData`, {useNewUrlParser:true});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -67,6 +70,5 @@ app.post("/FBLA/AddEvent", (req, res) => {
 });
 
 app.post("/FBLA/EditEvent", (req, res) => {
-    // TODO: Finish this
-    Event.findOneAndUpdate();
+    Event.findOneAndUpdate({name: req.body.name},req.body);
 });

@@ -13,6 +13,10 @@ const EventSchema = new Schema({
     points: {
         type: Number,
         required: true
+    },
+    description: {
+        type: String,
+        required: true
     }
 });
 
