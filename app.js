@@ -5,10 +5,10 @@ const app = new express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 const Teacher = require('./models/Teacher.js');
 const Event = require('./models/Event.js');
 
-// TODO create a new cluster on MongoDB
 const username = encodeURIComponent('fbla');
 const password = encodeURIComponent('Xtxg5EnaFVHoQ9Xs');
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb.net/userData`, {useNewUrlParser:true});
@@ -16,6 +16,12 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'client')));
+app.use(session({
+    secret: "fblaProject",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: true}
+}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -71,4 +77,14 @@ app.post("/FBLA/AddEvent", (req, res) => {
 
 app.post("/FBLA/EditEvent", (req, res) => {
     Event.findOneAndUpdate({name: req.body.name},req.body);
+});
+
+app.post("/FBLA/SignUp", (req, res) => {
+    Teacher.create(req.body, (err, data) => {
+        res.redirect('/FBLA');
+    });
+});
+
+app.post("/FBLA/Login", async (req, res) => {
+    req.session.user = await Teacher.findOne(req.body.username);
 });

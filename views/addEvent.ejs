@@ -27,18 +27,22 @@
               <h5 class="card-title">Add Event</h5>
 
               <!-- Vertical Form -->
-              <form class="row g-3">
+              <form class="row g-3" action="/FBLA/AddEvent" method="POST">
                 <div class="col-12">
                   <label for="eventNameAdd" class="form-label">Event Name</label>
-                  <input type="text" class="form-control" id="eventNameAdd" name="eventNameAdd" required>
+                  <input type="text" class="form-control" id="eventNameAdd" name="name" required>
                 </div>
                 <div class="col-12">
                   <label for="pointsAdd" class="form-label">Points</label>
-                  <input type="number" class="form-control" id="pointsAdd" name="pointsAdd" required>
+                  <input type="number" class="form-control" id="pointsAdd" name="points" required>
                 </div>
                 <div class="col-12">
-                  <label for="eventDate" class="form-label">Date</label>
-                  <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                  <label for="eventDateAdd" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="eventDateAdd" name="date" required>
+                </div>
+                <div class="col-12">
+                  <label for="eventDescriptionAdd" class="form-label">Description</label>
+                  <textarea class="form-control" id="eventDescriptionAdd" name="description" rows="5" cols="30" required></textarea>
                 </div>
                 
                 <div class="text-center">
