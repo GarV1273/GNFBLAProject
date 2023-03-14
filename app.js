@@ -8,6 +8,8 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const Teacher = require('./models/Teacher.js');
 const Event = require('./models/Event.js');
+const School = require("./models/School.js");
+const Student = require("./models/Student.js");
 
 const username = encodeURIComponent('fbla');
 const password = encodeURIComponent('Xtxg5EnaFVHoQ9Xs');
@@ -80,11 +82,43 @@ app.post("/FBLA/EditEvent", (req, res) => {
 });
 
 app.post("/FBLA/SignUp", (req, res) => {
-    Teacher.create(req.body, (err, data) => {
-        res.redirect('/FBLA');
+    Teacher.findOne({username:req.body.username}, (error, user) => {
+        if (user) {
+            res.redirect('/FBLA');
+        }
+        else if (req.body.confirmPassword === req.body.password) {
+            Teacher.create(req.body, (error, args) => {
+                res.redirect('/FBLA');
+            });
+        }
+        else {
+            res.redirect('/FBLA');
+        }
     });
 });
 
 app.post("/FBLA/Login", async (req, res) => {
-    req.session.user = await Teacher.findOne(req.body.username);
+    const {username, password} = req.body;
+    Teacher.findOne({username:username}, (error, user) => {
+        if (user) {
+            bcrypt.compare(password, user.password, (error, same) => {
+                if (same) {
+                    res.redirect('/FBLA')
+                    req.session.username = username;
+                }
+                else {
+                    res.redirect('/FBLA');
+                }
+            });
+        }
+        else {
+            res.redirect('/FBLA');
+        }
+    });
+});
+
+app.post("/FBLA/AddStudent", (req, res) => {
+    Student.create(req.body, (err, data) => {
+        res.redirect('/FBLA/dashboard');
+    });
 });
