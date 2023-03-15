@@ -17,7 +17,11 @@ const TeacherSchema = new Schema({
         required: true,
         unique: true
     },
-    school: {
+    email: {
+        type: String,
+        required: true,
+    },
+    schoolId: {
         type: Schema.Types.ObjectId,
         required: true,
         unique: true
