@@ -9,11 +9,9 @@ const SchoolSchema = new Schema({
     },
     students: {
         type: [Schema.Types.ObjectId],
-        required: true
     },
     events: {
         type: [Schema.Types.ObjectId],
-        required: true
     }
 });
 

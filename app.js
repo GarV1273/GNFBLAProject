@@ -81,13 +81,16 @@ app.post("/FBLA/EditEvent", (req, res) => {
     Event.findOneAndUpdate({name: req.body.name},req.body);
 });
 
-app.post("/FBLA/SignUp", (req, res) => {
-    Teacher.findOne({username:req.body.username}, (error, user) => {
+app.post("/FBLA/SignUp", async (req, res) => {
+    let data = req.body;
+    let school = await School.findOne({name:data.school});
+    data.schoolId = school._id;
+    Teacher.findOne({username:data.username}, (error, user) => {
         if (user) {
             res.redirect('/FBLA');
         }
-        else if (req.body.confirmPassword === req.body.password) {
-            Teacher.create(req.body, (error, args) => {
+        else if (data.confirmPassword === data.password) {
+            Teacher.create(data, (error, args) => {
                 res.redirect('/FBLA');
             });
         }

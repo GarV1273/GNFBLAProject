@@ -21,7 +21,7 @@ const TeacherSchema = new Schema({
         type: String,
         required: true,
     },
-    school: {
+    schoolId: {
         type: Schema.Types.ObjectId,
         required: true,
         unique: true
