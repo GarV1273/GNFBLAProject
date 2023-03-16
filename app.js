@@ -10,6 +10,7 @@ const Teacher = require('./models/Teacher.js');
 const Event = require('./models/Event.js');
 const School = require("./models/School.js");
 const Student = require("./models/Student.js");
+global.signedInUser;
 
 const username = encodeURIComponent('fbla');
 const password = encodeURIComponent('Xtxg5EnaFVHoQ9Xs');
@@ -18,12 +19,6 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'client')));
-app.use(session({
-    secret: "fblaProject",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {secure: true}
-}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -36,13 +31,31 @@ app.get("/FBLA", (req, res) => {
     console.log("rendered");
 });
 
-app.get("/FBLA/dashboard", (req, res) => {
-    res.render('dashboard');
-    console.log("rendered");
+app.get("/FBLA/dashboard", async (req, res) => {
+    let schoolEvents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.events.length; i++) {
+        let event = await Event.findById(school.events[i]);
+        schoolEvents.push(event);
+    }
+    res.render('dashboard', {
+        signedInUser,
+        schoolEvents
+    });
 });
 
-app.get("/FBLA/events", (req, res) => {
-    res.render('events');
+app.get("/FBLA/events", async (req, res) => {
+    let schoolEvents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.events.length; i++) {
+        let event = await Event.findById(school.events[i]);
+        schoolEvents.push(event);
+    }
+    res.render('events', {
+        schoolEvents
+    });
     console.log("rendered");
 });
 
@@ -56,8 +69,17 @@ app.get("/FBLA/editEvent", (req, res) => {
     console.log("rendered");
 });
 
-app.get("/FBLA/assign-points", (req, res) => {
-    res.render('assignPoints');
+app.get("/FBLA/assign-points", async (req, res) => {
+    let schoolEvents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.events.length; i++) {
+        let event = await Event.findById(school.events[i]);
+        schoolEvents.push(event);
+    }
+    res.render('assignPoints', {
+        schoolEvents
+    });
     console.log("rendered");
 });
 
@@ -72,8 +94,16 @@ app.get("/FBLA/winner", (req, res) => {
 });
 
 app.post("/FBLA/AddEvent", (req, res) => {
-    Event.create(req.body, (err, data) => {
-        res.redirect('/FBLA/events');
+    Teacher.findById(signedInUser._id, (err, data) => {
+        if (err) throw err;
+        School.findById(data.schoolId, (error, school) => {
+            Event.create(req.body, (err, event) => {
+                School.findByIdAndUpdate(school._id,{$push : {events : event._id}}, (er, schoolEvnt) => {
+                    if (er) throw er;
+                });
+                res.redirect('/FBLA/events');
+            });
+        });
     });
 });
 
@@ -84,7 +114,14 @@ app.post("/FBLA/EditEvent", (req, res) => {
 app.post("/FBLA/SignUp", async (req, res) => {
     let data = req.body;
     let school = await School.findOne({name:data.school});
-    data.schoolId = school._id;
+    if (school != null) {
+        data.schoolId = school._id;
+    }
+    else {
+        School.create({name: data.school}, (err, args) => {
+            data.schoolId = args._id;
+        });
+    }
     Teacher.findOne({username:data.username}, (error, user) => {
         if (user) {
             res.redirect('/FBLA');
@@ -106,8 +143,8 @@ app.post("/FBLA/Login", async (req, res) => {
         if (user) {
             bcrypt.compare(password, user.password, (error, same) => {
                 if (same) {
-                    res.redirect('/FBLA')
-                    req.session.username = username;
+                    res.redirect('/FBLA/dashboard');
+                    signedInUser = user;
                 }
                 else {
                     res.redirect('/FBLA');
@@ -124,4 +161,30 @@ app.post("/FBLA/AddStudent", (req, res) => {
     Student.create(req.body, (err, data) => {
         res.redirect('/FBLA/dashboard');
     });
+});
+
+app.post("/FBLA/AssignPoints", async (req, res) => {
+    console.log(req.body);
+    let student;
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    let event = await Event.findOne({name: req.body.name});
+    let existingStudent = await Student.findOne({name: req.body.studentName, grade: req.body.grade});
+    if (existingStudent != null) {
+        console.log("Hello");
+        let numPoints = existingStudent.points + event.points;
+        Student.findOneAndUpdate(existingStudent, {points: numPoints},(err, data) => {
+            if (err) throw err;
+            School.findByIdAndUpdate(school._id,{$push : {students : data._id}}, (err, schoolEvnt) => {
+                if (err) throw err;
+                res.redirect('/FBLA/dashboard');
+            });
+        });
+    } else {
+        student = await Student.create({name: req.body.studentName, grade: req.body.grade, points: event.points});
+        School.findByIdAndUpdate(school._id,{$push : {students : student._id}}, (err, schoolEvnt) => {
+            if (err) throw err;
+            res.redirect('/FBLA/dashboard');
+        });
+    }
 });

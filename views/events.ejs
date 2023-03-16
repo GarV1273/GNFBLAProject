@@ -34,33 +34,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Name</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa quisquam ea praesentium saepe soluta quasi quibusdam voluptates fugiat hic perspiciatis earum libero quidem repellendus quis, tempore asperiores veritatis ex?</td>
-                <td>10</td>
-                <td>March 3, 2023</td>
-                <td><button class="btn btn-primary">Edit</button></td>
-                <td><button class="btn btn-primary">Add Student</button></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Name2</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa quisquam ea praesentium saepe soluta quasi quibusdam voluptates fugiat hic perspiciatis earum libero quidem repellendus quis, tempore asperiores veritatis ex?</td>
-                <td>40</td>
-                <td>March 3, 2023</td>
-                <td><button class="btn btn-primary">Edit</button></td>
-                <td><button class="btn btn-primary">Add Student</button></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Name3</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa quisquam ea praesentium saepe soluta quasi quibusdam voluptates fugiat hic perspiciatis earum libero quidem repellendus quis, tempore asperiores veritatis ex?</td>
-                <td>25</td>
-                <td>March 3, 2023</td>
-                <td><button class="btn btn-info">Edit</button></td>
-                <td><button class="btn btn-primary">Add Student</button></td>
-              </tr>
+              <% for (let i = 0; i < schoolEvents.length; i++) { %>
+                <tr>
+                  <th scope="row"><%= i + 1 %></th>
+                  <td><%= schoolEvents[i].name %></td>
+                  <td><%= schoolEvents[i].description %></td>
+                  <td><%= schoolEvents[i].points %></td>
+                  <td><%= schoolEvents[i].date %></td>
+                  <td><button class="btn btn-primary">Edit</button></td>
+                  <td><button class="btn btn-primary">Add Student</button></td>
+                </tr>
+              <% } %>
             </tbody>
           </table>
 

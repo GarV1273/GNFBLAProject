@@ -28,48 +28,20 @@
 
               <!-- Default List group -->
               <ul class="list-group">
-                <li class="list-group-item">
-                  <div class="card">
-                    <div class="card-body">
-                      <h1 class="card-title">Event Name</h1>
-                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
-                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
-                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
-                      dolore odio impedit facilis eveniet voluptatibus.
-                      <br><br>
-                      <a href="/FBLA/assign-points"><button class="btn btn-primary">Add a Student</button></a>
+                <% for (let i = 0; i < schoolEvents.length; i++) { %>
+                  <li class="list-group-item">
+                    <div class="card">
+                      <div class="card-body">
+                        <h1 class="card-title"><%= schoolEvents[i].name %></h1>
+                        <h6 class="card-subtitle mb-2 text-muted">Date: <%= schoolEvents[i].date %></h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Points: <%= schoolEvents[i].points %></h6>
+                        <%= schoolEvents[i].description %>
+                        <br><br>
+                        <a href="/FBLA/assign-points"><button class="btn btn-primary">Add a Student</button></a>
+                      </div>
                     </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="card">
-                    <div class="card-body">
-                      <h1 class="card-title">Event Name 2 </h1>
-                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
-                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
-                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
-                      dolore odio impedit facilis eveniet voluptatibus.
-                      <br><br>
-                      <a href="/FBLA/assign-points"><button class="btn btn-primary">Add a Student</button></a>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="card">
-                    <div class="card-body">
-                      <h1 class="card-title">Event Name 3</h1>
-                      <h6 class="card-subtitle mb-2 text-muted">Date: __date__</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Points: __points__</h6>
-                      Event description Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsum quam
-                      quasi ipsam labore ipsa incidunt? Tenetur nesciunt eveniet impedit magni quae. Doloribus quasi
-                      dolore odio impedit facilis eveniet voluptatibus.
-                      <br><br>
-                      <a href="/FBLA/assign-points"><button class="btn btn-primary">Add a Student</button></a>
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                <% } %>
               </ul><!-- End Default List group -->
               <a href="/FBLA/events"><button class="btn btn-primary">View All Events</button></a>
 

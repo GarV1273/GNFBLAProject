@@ -8,10 +8,10 @@ const SchoolSchema = new Schema({
         required: true
     },
     students: {
-        type: [Schema.Types.ObjectId],
+        type: [Schema.Types.ObjectId]
     },
     events: {
-        type: [Schema.Types.ObjectId],
+        type: [Schema.Types.ObjectId]
     }
 });
 
