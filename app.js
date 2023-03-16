@@ -180,16 +180,17 @@ app.post("/FBLA/SignUp", async (req, res) => {
         data.schoolId = school._id;
     }
     else {
-        School.create({name: data.school}, (err, args) => {
-            data.schoolId = args._id;
-        });
+        data.schoolId = (await School.create({name: data.school}))._id;
     }
     Teacher.findOne({username:data.username}, (error, user) => {
         if (user) {
             res.redirect('/FBLA');
         }
         else if (data.confirmPassword === data.password) {
+            console.log(data);
             Teacher.create(data, (error, args) => {
+                if (error) throw error;
+                console.log("Hello");
                 res.redirect('/FBLA');
             });
         }
