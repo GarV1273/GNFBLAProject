@@ -23,7 +23,6 @@ const TeacherSchema = new Schema({
     schoolId: {
         type: Schema.Types.ObjectId,
         required: true,
-        unique: true
     }
 });
 
