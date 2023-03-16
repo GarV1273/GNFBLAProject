@@ -27,34 +27,18 @@
             <thead>
               <th scope="col">Student Name</th>
               <th scope="col">Award</th>
-              <th scope="col">Prize</th>
+              <th scope="col">Points</th>
+              <th scope="col">Grade</th>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">Name here</th>
-                <td>Award Here</td>
-                <td>pooints here</td>
-              </tr>
-              <tr>
-                <th scope="row">Name here</th>
-                <td>Award Here</td>
-                <td>pooints here</td>
-              </tr>
-              <tr>
-                <th scope="row">Name here</th>
-                <td>Award Here</td>
-                <td>pooints here</td>
-              </tr>
-              <tr>
-                <th scope="row">Name here</th>
-                <td>Award Here</td>
-                <td>pooints here</td>
-              </tr>
-              <tr>
-                <th scope="row">Name here</th>
-                <td>Award Here</td>
-                <td>pooints here</td>
-              </tr>
+              <% for (let i = 0; i < allWinners.length; i++) { %>
+                <tr>
+                  <th scope="row"><%= allWinners[i].name %></th>
+                  <td>Coins</td>
+                  <td><%= allWinners[i].points %></td>
+                  <td><%= allWinners[i].grade %></td>
+                </tr>
+              <% } %>
             </tbody>
           </table>
           

@@ -83,13 +83,75 @@ app.get("/FBLA/assign-points", async (req, res) => {
     console.log("rendered");
 });
 
-app.get("/FBLA/reports", (req, res) => {
-    res.render('reports');
+app.get("/FBLA/reports", async (req, res) => {
+    let schoolStudents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.students.length; i++) {
+        let student = await Student.findById(school.students[i]);
+        schoolStudents.push(student);
+    }
+    let gradeNine = schoolStudents.filter(function (el) {
+        return el.grade === 9;
+    });
+    let gradeTen = schoolStudents.filter(function (el) {
+        return el.grade === 10;
+    });
+    let gradeEleven = schoolStudents.filter(function (el) {
+        return el.grade === 11;
+    });
+    let gradeTwelve = schoolStudents.filter(function (el) {
+        return el.grade === 12;
+    });
+    res.render('reports', {
+        gradeNine,
+        gradeTen,
+        gradeEleven,
+        gradeTwelve
+    });
     console.log("rendered");
 });
 
-app.get("/FBLA/winner", (req, res) => {
-    res.render('winner');
+app.get("/FBLA/winner", async (req, res) => {
+    let schoolStudents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.students.length; i++) {
+        let student = await Student.findById(school.students[i]);
+        schoolStudents.push(student);
+    }
+    let gradeNine = schoolStudents.filter(function (el) {
+        return el.grade === 9;
+    });
+    let gradeTen = schoolStudents.filter(function (el) {
+        return el.grade === 10;
+    });
+    let gradeEleven = schoolStudents.filter(function (el) {
+        return el.grade === 11;
+    });
+    let gradeTwelve = schoolStudents.filter(function (el) {
+        return el.grade === 12;
+    });
+    let gradeNineWinner = gradeNine[Math.floor(Math.random() * gradeNine.length)];
+    let gradeTenWinner = gradeTen[Math.floor(Math.random() * gradeTen.length)];
+    let gradeElevenWinner = gradeEleven[Math.floor(Math.random() * gradeEleven.length)];
+    let gradeTwelveWinner = gradeTwelve[Math.floor(Math.random() * gradeTwelve.length)];
+    let allWinners = [];
+    if (gradeNineWinner != undefined) {
+        allWinners.push(gradeNineWinner);
+    }
+    if (gradeTenWinner != undefined) {
+        allWinners.push(gradeTenWinner);
+    }
+    if (gradeElevenWinner != undefined) {
+        allWinners.push(gradeElevenWinner);
+    }
+    if (gradeTwelveWinner != undefined) {
+        allWinners.push(gradeTwelveWinner);
+    }
+    res.render('winner', {
+        allWinners
+    });
     console.log("rendered");
 });
 
