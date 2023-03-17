@@ -21,93 +21,61 @@
             </nav>
           </div><!-- End Page Title -->
 
+          <form class="row g-3" action="/FBLA/reports" method="POST">
+            <div class="col-12">
+              <label for="gradeFilter" class="form-label">Filter by grade</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Event selection" id="grade" name="grade"
+                  required>
+                  <option selected>(Select Grade)</option>
+                  <% for (let i=0; i < grades.length; i++) { %>
+                    <option value="<%= grades[i] %>">
+                      Grade <%= grades[i] %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+          </form>
+
+          <br><br>
+
           <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-6">
               <div class="row">
-                <h3 class="text-center">9th Grade</h3>
+                <h3 class="text-center">Students</h3>
               </div>
               <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Student Name</th>
                     <th scope="col">Points</th>
+                    <th scope="col">Grade</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% for (let i = 0; i < gradeNine.length; i++) { %>
+                  <% for (let i=0; i < displayedStudents.length; i++) { %>
                     <tr>
-                      <th scope="row"><%= gradeNine[i].name %></th>
-                      <td><%= gradeNine[i].points %></td>
+                      <th scope="row">
+                        <%= displayedStudents[i].name %>
+                      </th>
+                      <td>
+                        <%= displayedStudents[i].points %>
+                      </td>
+                      <td>
+                        <%= displayedStudents[i].grade %>
+                      </td>
                     </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="row">
-                <h3 class="text-center">10th Grade</h3>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for (let i = 0; i < gradeTen.length; i++) { %>
-                    <tr>
-                      <th scope="row"><%= gradeTen[i].name %></th>
-                      <td><%= gradeTen[i].points %></td>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="row">
-                <h3 class="text-center">11th Grade</h3>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for (let i = 0; i < gradeEleven.length; i++) { %>
-                    <tr>
-                      <th scope="row"><%= gradeEleven[i].name %></th>
-                      <td><%= gradeEleven[i].points %></td>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="row">
-                <h3 class="text-center">12th Grade</h3>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for (let i = 0; i < gradeTwelve.length; i++) { %>
-                    <tr>
-                      <th scope="row"><%= gradeTwelve[i].name %></th>
-                      <td><%= gradeTwelve[i].points %></td>
-                    </tr>
-                  <% } %>
+                    <% } %>
                 </tbody>
               </table>
             </div>
           </div>
-          
+
         </main><!-- End #main -->
 
         <%- include('./partials/footer'); %>

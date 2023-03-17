@@ -14,10 +14,10 @@ global.signedInUser;
 
 const username = encodeURIComponent('fbla');
 const password = encodeURIComponent('Xtxg5EnaFVHoQ9Xs');
-mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb.net/userData`, {useNewUrlParser:true});
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.w6jnzm3.mongodb.net/userData`, { useNewUrlParser: true });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -87,10 +87,26 @@ app.get("/FBLA/reports", async (req, res) => {
     let schoolStudents = [];
     let teacher = await Teacher.findById(signedInUser._id);
     let school = await School.findById(teacher.schoolId);
+    let grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
     for (let i = 0; i < school.students.length; i++) {
         let student = await Student.findById(school.students[i]);
         schoolStudents.push(student);
     }
+
+    // let gradesStudents = [];
+
+    // for (let i = 0; i < grades.length; i++) {
+    //     let students = schoolStudents.filter(function (el) {
+    //         return el.grade === grades[i];
+    //     });
+    //     gradesStudents.push(students);
+    // }
+
+    // console.log(gradesStudents);
+
+    let displayedStudents = schoolStudents;
+
     let gradeNine = schoolStudents.filter(function (el) {
         return el.grade === 9;
     });
@@ -104,10 +120,45 @@ app.get("/FBLA/reports", async (req, res) => {
         return el.grade === 12;
     });
     res.render('reports', {
-        gradeNine,
-        gradeTen,
-        gradeEleven,
-        gradeTwelve
+        displayedStudents,
+        grades
+    });
+    console.log("rendered");
+});
+
+app.post("/FBLA/reports", async (req, res) => {
+    let schoolStudents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    let grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let selectedGrade = req.body.grade;
+    console.log(selectedGrade);
+
+    for (let i = 0; i < school.students.length; i++) {
+        let student = await Student.findById(school.students[i]);
+        schoolStudents.push(student);
+    }
+
+    console.log(schoolStudents);
+
+    // let gradesStudents = [];
+
+    // for (let i = 0; i < grades.length; i++) {
+    //     let students = schoolStudents.filter(function (el) {
+    //         return el.grade === grades[i];
+    //     });
+    //     gradesStudents.push(students);
+    // }
+
+    let displayedStudents = schoolStudents.filter(function (el) {
+        return el.grade === parseInt(selectedGrade);
+    });
+
+    console.log(displayedStudents);
+
+    res.render('reports', {
+        displayedStudents,
+        grades
     });
     console.log("rendered");
 });
@@ -120,6 +171,39 @@ app.get("/FBLA/winner", async (req, res) => {
         let student = await Student.findById(school.students[i]);
         schoolStudents.push(student);
     }
+
+    grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+    let gradesStudents = [];
+
+    // Sorts the students by grade level
+    for (let i = 0; i < grades.length; i++) {
+        let students = schoolStudents.filter(function (el) {
+            return el.grade === grades[i];
+        });
+        gradesStudents.push(students);
+    };
+
+    console.log(gradesStudents);
+
+    // Selects the student with the highest points overall from the school
+    let highestPointsStudent = null;
+    let highestPoints = -Infinity;
+
+    for (let i = 0; i < schoolStudents.length; i++) {
+        if (schoolStudents[i].points > highestPoints) {
+            highestPoints = schoolStudents[i].points;
+            highestPointsStudent = schoolStudents[i];
+        }
+    }
+
+    // Add the reason for winning to the student object
+    highestPointsStudent.updateOne({}, {$set: {"reason": "Most points!"}});
+
+    console.log(highestPointsStudent);
+
+
+
     let gradeNine = schoolStudents.filter(function (el) {
         return el.grade === 9;
     });
@@ -132,6 +216,9 @@ app.get("/FBLA/winner", async (req, res) => {
     let gradeTwelve = schoolStudents.filter(function (el) {
         return el.grade === 12;
     });
+
+
+
     let gradeNineWinner = gradeNine[Math.floor(Math.random() * gradeNine.length)];
     let gradeTenWinner = gradeTen[Math.floor(Math.random() * gradeTen.length)];
     let gradeElevenWinner = gradeEleven[Math.floor(Math.random() * gradeEleven.length)];
@@ -160,7 +247,7 @@ app.post("/FBLA/AddEvent", (req, res) => {
         if (err) throw err;
         School.findById(data.schoolId, (error, school) => {
             Event.create(req.body, (err, event) => {
-                School.findByIdAndUpdate(school._id,{$push : {events : event._id}}, (er, schoolEvnt) => {
+                School.findByIdAndUpdate(school._id, { $push: { events: event._id } }, (er, schoolEvnt) => {
                     if (er) throw er;
                 });
                 res.redirect('/FBLA/events');
@@ -170,19 +257,19 @@ app.post("/FBLA/AddEvent", (req, res) => {
 });
 
 app.post("/FBLA/EditEvent", (req, res) => {
-    Event.findOneAndUpdate({name: req.body.name},req.body);
+    Event.findOneAndUpdate({ name: req.body.name }, req.body);
 });
 
 app.post("/FBLA/SignUp", async (req, res) => {
     let data = req.body;
-    let school = await School.findOne({name:data.school});
+    let school = await School.findOne({ name: data.school });
     if (school != null) {
         data.schoolId = school._id;
     }
     else {
-        data.schoolId = (await School.create({name: data.school}))._id;
+        data.schoolId = (await School.create({ name: data.school }))._id;
     }
-    Teacher.findOne({username:data.username}, (error, user) => {
+    Teacher.findOne({ username: data.username }, (error, user) => {
         if (user) {
             res.redirect('/FBLA');
         }
@@ -201,8 +288,8 @@ app.post("/FBLA/SignUp", async (req, res) => {
 });
 
 app.post("/FBLA/Login", async (req, res) => {
-    const {username, password} = req.body;
-    Teacher.findOne({username:username}, (error, user) => {
+    const { username, password } = req.body;
+    Teacher.findOne({ username: username }, (error, user) => {
         if (user) {
             bcrypt.compare(password, user.password, (error, same) => {
                 if (same) {
@@ -231,21 +318,21 @@ app.post("/FBLA/AssignPoints", async (req, res) => {
     let student;
     let teacher = await Teacher.findById(signedInUser._id);
     let school = await School.findById(teacher.schoolId);
-    let event = await Event.findOne({name: req.body.name});
-    let existingStudent = await Student.findOne({name: req.body.studentName, grade: req.body.grade});
+    let event = await Event.findOne({ name: req.body.name });
+    let existingStudent = await Student.findOne({ name: req.body.studentName, grade: req.body.grade });
     if (existingStudent != null) {
-        console.log("Hello");
+        let existingStudentID = existingStudent._id;
+        console.log(existingStudent);
         let numPoints = existingStudent.points + event.points;
-        Student.findOneAndUpdate(existingStudent, {points: numPoints},(err, data) => {
+        console.log(numPoints);
+        Student.findByIdAndUpdate(existingStudentID, { "points": numPoints }, (err, data) => {
             if (err) throw err;
-            School.findByIdAndUpdate(school._id,{$push : {students : data._id}}, (err, schoolEvnt) => {
-                if (err) throw err;
-                res.redirect('/FBLA/dashboard');
-            });
+            console.log("Updated?");
+            res.redirect('/FBLA/dashboard');
         });
     } else {
-        student = await Student.create({name: req.body.studentName, grade: req.body.grade, points: event.points});
-        School.findByIdAndUpdate(school._id,{$push : {students : student._id}}, (err, schoolEvnt) => {
+        student = await Student.create({ name: req.body.studentName, grade: req.body.grade, points: event.points });
+        School.findByIdAndUpdate(school._id, { $push: { students: student._id } }, (err, schoolEvnt) => {
             if (err) throw err;
             res.redirect('/FBLA/dashboard');
         });
