@@ -200,12 +200,25 @@ app.get("/FBLA/winner", async (req, res) => {
     console.log(highestPointsStudent);
     // Add the reason for winning to the student object
     highestPointsStudent["reason"] = "Overall Winner";
+    if (highestPointsStudent.points >= 250) {
+        highestPointsStudent["prize"] = "2 Free Prom Tickets OR a Free Yearbook";
+    } else if (highestPointsStudent.points >= 200) {
+        highestPointsStudent["prize"] = "School Hoodie";
+    } else if (highestPointsStudent.points >= 100) {
+        highestPointsStudent["prize"] = "School T-Shirt";
+    } else if (highestPointsStudent.points >= 40) {
+        highestPointsStudent["prize"] = "King Size Candy Bar";
+    } else {
+        highestPointsStudent["prize"] = "Candy Bar";
+    }
 
     allWinners.push(highestPointsStudent);
 
     // Using the gradesStudents array, select a student from each grade level.
     // It will be added to the allWinners array
-    
+    let currentGrade = null;
+    let randomWinner = null;
+
     for (let i = 0; i < gradesStudents.length; i++) {
         currentGrade = gradesStudents[i];
         randomWinner = currentGrade[Math.floor(Math.random() * currentGrade.length)];
@@ -215,9 +228,24 @@ app.get("/FBLA/winner", async (req, res) => {
             continue;
         }
         randomWinner = JSON.parse(JSON.stringify(randomWinner));
+        // Award prizes to the random winners from the prizes object
+        if (randomWinner.points >= 250) {
+            randomWinner["prize"] = "2 Free Prom Tickets OR a Free Yearbook";
+        } else if (randomWinner.points >= 200) {
+            randomWinner["prize"] = "School Hoodie";
+        } else if (randomWinner.points >= 100) {
+            randomWinner["prize"] = "School T-Shirt";
+        } else if (randomWinner.points >= 40) {
+            randomWinner["prize"] = "King Size Candy Bar";
+        } else {
+            randomWinner["prize"] = "Candy Bar";
+        }
         randomWinner["reason"] = "Random Winner (Grade " + grades[i] + ")";
         allWinners.push(randomWinner);
+
     }
+
+
 
 
     // let gradeNineWinner = gradeNine[Math.floor(Math.random() * gradeNine.length)];
