@@ -181,6 +181,8 @@ app.get("/FBLA/winner", async (req, res) => {
         gradesStudents.push(students);
     };
 
+    // An object of prizes with a point threshold
+
     console.log(gradesStudents);
 
     allWinners = [];
