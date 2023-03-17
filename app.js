@@ -86,8 +86,12 @@ app.get("/FBLA/assign-points", async (req, res) => {
         let event = await Event.findById(school.events[i]);
         schoolEvents.push(event);
     }
+
+    grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
     res.render('assignPoints', {
-        schoolEvents
+        schoolEvents,
+        grades
     });
     console.log("rendered");
 });
@@ -286,6 +290,10 @@ app.post("/FBLA/AddEvent", (req, res) => {
 });
 
 app.post("/FBLA/EditEvent", async (req, res) => {
+    if (req.body.selectedId == "none") {
+        res.redirect('/FBLA/events');
+        return;
+    }
     let editedEvent = await Event.findByIdAndUpdate(req.body.selectedId, req.body);
     res.redirect('/FBLA/events');
 });
@@ -344,6 +352,10 @@ app.post("/FBLA/AddStudent", (req, res) => {
 });
 
 app.post("/FBLA/AssignPoints", async (req, res) => {
+    if (req.body.name == "none") {
+        res.redirect('/FBLA/dashboard');
+        return;
+    }
     console.log(req.body);
     let student;
     let teacher = await Teacher.findById(signedInUser._id);
