@@ -64,8 +64,17 @@ app.get("/FBLA/addEvent", (req, res) => {
     console.log("rendered");
 });
 
-app.get("/FBLA/editEvent", (req, res) => {
-    res.render('editEvent');
+app.get("/FBLA/editEvent", async (req, res) => {
+    let schoolEvents = [];
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    for (let i = 0; i < school.events.length; i++) {
+        let event = await Event.findById(school.events[i]);
+        schoolEvents.push(event);
+    }
+    res.render('editEvent', {
+        schoolEvents
+    });
     console.log("rendered");
 });
 
@@ -197,9 +206,11 @@ app.get("/FBLA/winner", async (req, res) => {
         }
     }
 
-    // Add the reason for winning to the student object
-    highestPointsStudent.updateOne({}, {$set: {"reason": "Most points!"}});
+    // Convert the student to a json so we can modify it
+    highestPointsStudent = JSON.parse(JSON.stringify(highestPointsStudent));
 
+    // Add the reason for winning to the student object
+    highestPointsStudent.reason = "Overall Winner";
     console.log(highestPointsStudent);
 
 
@@ -256,8 +267,9 @@ app.post("/FBLA/AddEvent", (req, res) => {
     });
 });
 
-app.post("/FBLA/EditEvent", (req, res) => {
-    Event.findOneAndUpdate({ name: req.body.name }, req.body);
+app.post("/FBLA/EditEvent", async (req, res) => {
+    let editedEvent = await Event.findByIdAndUpdate(req.body.selectedId, req.body);
+    res.redirect('/FBLA/events');
 });
 
 app.post("/FBLA/SignUp", async (req, res) => {

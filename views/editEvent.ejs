@@ -27,15 +27,15 @@
               <h5 class="card-title">Edit Event</h5>
 
               <!-- Vertical Form -->
-              <form class="row g-3">
+              <form class="row g-3" action="/FBLA/EditEvent" method="POST">
                 <div class="col-12">
                   <label for="eventNameEdit" class="form-label">Event Name</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Event selection" id="eventNameEdit" name="eventNameEdit" required>
+                    <select class="form-select" aria-label="Event selection" id="eventNameEdit" name="selectedId" required>
                       <option selected>(Select Event)</option>
-                      <option value="1">Event1</option>
-                      <option value="2">Event2</option>
-                      <option value="3">Event3</option>
+                      <% for (let i = 0; i < schoolEvents.length; i++) { %>
+                        <option value="<%= schoolEvents[i]._id %>"><%= schoolEvents[i].name %></option>
+                      <% } %>
                     </select>
                   </div>
                 </div>
