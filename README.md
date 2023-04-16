@@ -1,5 +1,5 @@
 # FBLA CODING AND PROGRAMMING
-## Authors: Nirmaha Mukherjee
+## Authors: Nirmaha Mukherjee and Gavin Sutherland
 ## Missouri State Competition
 
 ### Here is the exact prompt
@@ -15,8 +15,17 @@ Develop a program that will help improve student involvement at your school.  Th
 
 ### Stack
 - Front-end: The user interaction will be done throught a website, so we will be using HTML, CSS, and JavaScript/TypeScript. We may add other libraries/frameworks, but this is our baseline.
-- Back-end: Most likely Node.js, but I'm open to other options.
-- Database: We can do a NOSQL like MongoDB or a relational like MySQL or SQL Server. I'm good with either.
+  - We used a free mdbootstrap landing page template for the index and the NiceAdmin template for user GUI.
+- Back-end: We will be using ejs and node.js to interact with th databse and do the form processing.
+- Database: We used a MongoDB cluster to store the data.
 
 ### Requirements
-- Administrotors can login to an account. Each administrotor is attached to a school. 
+- Administrators can login to an account. Each administrotor is attached to a school. 
+- Administrators can add events and assign point values to them.
+- Administrators can add students to their school.
+- Administrators can add students to events.
+- Administrators can view a report of the points each student has.
+- Administrators can view a report of the points each student has in each grade.
+- Administrators can view a report of the prize winners. The winners are specified in the prompt.
+- Administrators can edit event details
+
