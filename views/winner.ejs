@@ -34,7 +34,7 @@
             <tbody>
               <% for (let i = 0; i < allWinners.length; i++) { %>
                 <tr>
-                  <th scope="row"><%= allWinners[i].name %></th>
+                  <th scope="row"><%= allWinners[i].firstName + " " + allWinners[i].lastName %></th>
                   <td><%= allWinners[i].reason %></td>
                   <td><%= allWinners[i].points %></td>
                   <td><%= allWinners[i].prize %></td>

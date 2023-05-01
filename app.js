@@ -116,6 +116,23 @@ app.get("/FBLA/reports", async (req, res) => {
     });
 });
 
+app.get('/FBLA/add-student', async (req, res) => {
+    res.render('addStudent');
+});
+
+app.post('/FBLA/AddStudent', async (req, res) => {
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    let student = await Student.create(req.body);
+    Student.findByIdAndUpdate(student._id, {"points": 0}, (err, student) => {
+        if (err) throw err;
+    });
+    School.findByIdAndUpdate(school._id, { $push: { students: student._id } }, (err, schoolEvnt) => {
+        if (err) throw err;
+        res.redirect('/FBLA/add-student');
+    });
+});
+
 app.post("/FBLA/reports", async (req, res) => {
     // Same function as above, but it filters the students based on the grade selected
     let schoolStudents = [];
@@ -306,37 +323,46 @@ app.post("/FBLA/Login", async (req, res) => {
     });
 });
 
-app.post("/FBLA/AddStudent", (req, res) => {
-    // Currently unused. This may be needed if we add student manually rather than through points assignment
-    Student.create(req.body, (err, data) => {
-        res.redirect('/FBLA/dashboard');
-    });
-});
+// app.post("/FBLA/AssignPoints", async (req, res) => {
+//     // Runs when the user submits the form on the assign points page
+//     if (req.body.name == "none") { // If they did not select an event, redirect them back to the assign points page
+//         res.redirect('/FBLA/assign-points');
+//         return;
+//     }
 
+//     let student;
+//     let teacher = await Teacher.findById(signedInUser._id);
+//     let school = await School.findById(teacher.schoolId);
+//     let event = await Event.findOne({ name: req.body.name });
+//     let existingStudent = await Student.findOne({ name: req.body.studentName, grade: req.body.grade });
+//     if (existingStudent != null) { // If the student exists, update their points
+//         let existingStudentID = existingStudent._id;
+//         let numPoints = existingStudent.points + event.points; // Update the points
+//         Student.findByIdAndUpdate(existingStudentID, { "points": numPoints }, (err, data) => {
+//             if (err) throw err;
+//             res.redirect('/FBLA/assign-points');
+//         });
+//     } else { // If the student does not exist, create them and add them to the school's students array
+//         student = await Student.create({ name: req.body.studentName, grade: req.body.grade, points: event.points });
+//         School.findByIdAndUpdate(school._id, { $push: { students: student._id } }, (err, schoolEvnt) => {
+//             if (err) throw err;
+//             res.redirect('/FBLA/assign-points');
+//         });
+//     }
+// });
 app.post("/FBLA/AssignPoints", async (req, res) => {
-    // Runs when the user submits the form on the assign points page
     if (req.body.name == "none") { // If they did not select an event, redirect them back to the assign points page
         res.redirect('/FBLA/assign-points');
         return;
     }
-
-    let student;
     let teacher = await Teacher.findById(signedInUser._id);
     let school = await School.findById(teacher.schoolId);
     let event = await Event.findOne({ name: req.body.name });
-    let existingStudent = await Student.findOne({ name: req.body.studentName, grade: req.body.grade });
-    if (existingStudent != null) { // If the student exists, update their points
-        let existingStudentID = existingStudent._id;
-        let numPoints = existingStudent.points + event.points; // Update the points
-        Student.findByIdAndUpdate(existingStudentID, { "points": numPoints }, (err, data) => {
-            if (err) throw err;
-            res.redirect('/FBLA/assign-points');
-        });
-    } else { // If the student does not exist, create them and add them to the school's students array
-        student = await Student.create({ name: req.body.studentName, grade: req.body.grade, points: event.points });
-        School.findByIdAndUpdate(school._id, { $push: { students: student._id } }, (err, schoolEvnt) => {
-            if (err) throw err;
-            res.redirect('/FBLA/assign-points');
-        });
-    }
+    let student = await Student.findOne({studentId: req.body.studentId});
+    let studentId = student._id;
+    let numPoints = student.points + event.points;
+    Student.findByIdAndUpdate(studentId, { "points": numPoints, $push: {attendedEvents: event._id}}, (err, data) => {
+        if (err) throw err;
+        res.redirect('/FBLA/assign-points');
+    });
 });
