@@ -35,11 +35,28 @@
     <!-- End Forms Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/FBLA/add-student">
-        <i class="bi bi-people"></i>
-        <span>Add Student</span>
+      <a class="nav-link collapsed" data-bs-target="#student-forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i><span>Students</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li> <!-- End add student Link -->
+      <ul id="student-forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="/FBLA/add-student">
+            <i class="bi bi-circle"></i><span>Add Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="/FBLA/remove-student">
+            <i class="bi bi-circle"></i><span>Remove Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="/FBLA/edit-student">
+            <i class="bi bi-circle"></i><span>Edit Students</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End student forms Link -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="/FBLA/assign-points">

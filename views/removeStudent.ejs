@@ -12,38 +12,27 @@
         <main id="main" class="main">
 
           <div class="pagetitle">
-            <h1>Add Student</h1>
+            <h1>Remove Student</h1>
             <nav>
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/FBLA/dashboard">Home</a></li>
                 <li class="breadcrumb-item "><a href="/FBLA/reports">Students</a></li>
-                <li class="breadcrumb-item active">Add Student</li>
+                <li class="breadcrumb-item active">Remove Student</li>
               </ol>
             </nav>
           </div><!-- End Page Title -->
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Add Student</h5>
+              <h5 class="card-title">Remove Student</h5>
 
               <!-- Vertical Form -->
-              <form class="row g-3" action="/FBLA/AddStudent" method="POST">
-                <div class="col-12">
-                  <label for="firstNameAdd" class="form-label">First Name</label>
-                  <input type="text" class="form-control" id="firstNameAdd" name="firstName" required>
-                </div>
-                <div class="col-12">
-                  <label for="lastNameAdd" class="form-label">Last Name</label>
-                  <input type="text" class="form-control" id="lastNameAdd" name="lastName" required>
-                </div>
-                <div class="col-12">
-                  <label for="gradeAdd" class="form-label">Grade</label>
-                  <input type="number" class="form-control" id="gradeAdd" name="grade" required min="1" max="9">
-                </div>
+              <form class="row g-3" action="/FBLA/RemoveStudent" method="POST">
                 <div class="col-12">
                     <label for="studentIdAdd" class="form-label">Student ID</label>
                     <input type="text" class="form-control" id="studentIdAdd" name="studentId" required>
                 </div>
+                
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-secondary">Reset</button>
@@ -52,7 +41,7 @@
 
             </div>
           </div>
-
+          
         </main><!-- End #main -->
 
         <%- include('./partials/footer'); %>

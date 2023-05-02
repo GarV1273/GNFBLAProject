@@ -120,6 +120,14 @@ app.get('/FBLA/add-student', async (req, res) => {
     res.render('addStudent');
 });
 
+app.get('/FBLA/edit-student', async (req, res) => {
+    res.render('editStudent');
+});
+
+app.get('/FBLA/remove-student', async (req, res) => {
+    res.render('removeStudent');
+});
+
 app.post('/FBLA/AddStudent', async (req, res) => {
     let teacher = await Teacher.findById(signedInUser._id);
     let school = await School.findById(teacher.schoolId);
@@ -130,6 +138,27 @@ app.post('/FBLA/AddStudent', async (req, res) => {
     School.findByIdAndUpdate(school._id, { $push: { students: student._id } }, (err, schoolEvnt) => {
         if (err) throw err;
         res.redirect('/FBLA/add-student');
+    });
+});
+
+app.post('/FBLA/EditStudent', async (req, res) => {
+    let student = await Student.findOne({studentId: req.body.studentId});
+    Student.findByIdAndUpdate(student._id, req.body, (err, student) => {
+        if (err) throw err;
+        res.redirect('/FBLA/edit-student');
+    });
+});
+
+app.post('/FBLA/RemoveStudent', async (req, res) => {
+    let teacher = await Teacher.findById(signedInUser._id);
+    let school = await School.findById(teacher.schoolId);
+    let student = await Student.findOne({studentId: req.body.studentId});
+    School.findByIdAndUpdate(school._id, { $pull: { students: student._id } }, (err, schoolEvnt) => {
+        if (err) throw err;
+        Student.findByIdAndDelete(student._id, (err, student) => {
+            if (err) throw err;
+            res.redirect('/FBLA/remove-student');
+        });
     });
 });
 
