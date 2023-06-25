@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/head'); %>
+
+  <body>
+
+    <%- include('./partials/header'); %>
+
+      <%- include('./partials/sidebar'); %>
+
+        <main id="main" class="main">
+
+          <div class="pagetitle">
+            <h1>Edit Student</h1>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/FBLA/dashboard">Home</a></li>
+                <li class="breadcrumb-item "><a href="/FBLA/reports">Students</a></li>
+                <li class="breadcrumb-item active">Edit Student</li>
+              </ol>
+            </nav>
+          </div><!-- End Page Title -->
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Edit Student</h5>
+
+              <!-- Vertical Form -->
+              <form class="row g-3" action="/FBLA/EditStudent" method="POST">
+                <div class="col-12">
+                  <label for="studentIdEdit" class="form-label">Student ID</label>
+                  <input type="number" class="form-control" id="studentIdEdit" name="studentId" required>
+                </div>
+                <div class="col-12">
+                    <label for="firstNameEdit" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstNameEdit" name="firstName" required>
+                </div>
+                <div class="col-12">
+                    <label for="lastNameEdit" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastNameEdit" name="lastName" required>
+                </div>
+                <div class="col-12">
+                    <label for="gradeEdit" class="form-label">Grade</label>
+                    <input type="number" class="form-control" id="gradeEdit" name="grade" required min="1" max="9">
+                </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+          
+        </main><!-- End #main -->
+
+        <%- include('./partials/footer'); %>
+
+  </body>
+
+</html>
