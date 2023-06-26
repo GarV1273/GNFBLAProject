@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <link rel="stylesheet" href="/css/mdb.min.css" />
+  <link rel="stylesheet" href="/css/register.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<style>
+  .hiddenInput {
+    display: none;
+  }
+</style>
+
+<body>
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+              <form autocomplete="off" method="post" onsubmit="return validateRegister();" action="#">
+
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+
+                    <div class="form-outline">
+                      <input type="text" id="fullName" class="form-control form-control-lg" name="name" required/>
+                      <label class="form-label" for="fullName">Full Name</label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-4 d-flex align-items-center">
+
+                    <div class="form-outline datepicker w-100">
+                      <input type="email" class="form-control form-control-lg" id="email" name="email" required/>
+                      <label for="email" class="form-label">Email</label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4 pb-2">
+
+                    <div class="form-outline">
+                      <input type="password" id="password" class="form-control form-control-lg" name="password" required/>
+                      <label class="form-label" for="password">Password</label>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6 mb-4 pb-2">
+
+                    <div class="form-outline">
+                      <input type="password" id="confirmPassword" class="form-control form-control-lg" required/>
+                      <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+
+                    <h6 class="mb-2 pb-1">I am: </h6>
+
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="createOrJoinSchool" id="create" value="create" required />
+                      <label class="form-check-label" for="femaleGender">Creating a new school</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="createOrJoinSchool" id="join"
+                        value="join" />
+                      <label class="form-check-label" for="maleGender">Joining a school</label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-4 pb-2 hiddenInput schoolName">
+
+                    <div class="form-outline">
+                      <input type="text" id="schoolName" class="form-control form-control-lg" name="schoolName" />
+                      <label class="form-label" for="schoolName">School Name</label>
+                    </div>
+
+                  </div>
+                  <div class="col-md-12 mb-4 pb-2 hiddenInput schoolID">
+
+                    <div class="form-outline">
+                      <input type="text" id="schoolID" class="form-control form-control-lg" name="schoolID" />
+                      <label class="form-label" for="schoolID">School ID</label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="alert alert-danger" role="alert" style="display: none;" id="errorMessage">
+                  Error message
+                </div>
+
+                <br>
+
+                <div class="mt-4 pt-2">
+                  <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('input[type=radio][name="createOrJoinSchool"]').change(function () {
+        // Get the current value of the radio button
+        var currentVal = $(this).val();
+        // alert(currentVal);
+        // If it is the create option, hide the schoolName input and show the schoolID input. Otherwise, do the opposite. Clear the unused input.
+        if (currentVal == "create") {
+          $(".schoolName").removeClass("hiddenInput");
+          $(".schoolID").addClass("hiddenInput");
+
+        } else {
+          $(".schoolName").addClass("hiddenInput");
+          $(".schoolID").removeClass("hiddenInput");
+        }
+      });
+    });
+  </script>
+  <script src="/js/validateRegister.js" type="text/javascript"></script>
+</body>
+
+</html>
