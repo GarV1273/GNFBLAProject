@@ -29,8 +29,12 @@
               <!-- Vertical Form -->
               <form class="row g-3" action="/FBLA/RemoveStudent" method="POST">
                 <div class="col-12">
-                    <label for="studentIdAdd" class="form-label">Student ID</label>
-                    <input type="text" class="form-control" id="studentIdAdd" name="studentId" required>
+                    <label for="studentIdAdd" class="form-label">Student</label>
+                    <select class="studentSelect form-control" name="studentId">
+                      <% for (let i = 0; i < schoolStudents.length; i++) { %>
+                        <option value="<%= schoolStudents[i].studentId %>"><%= schoolStudents[i].firstName + " " + schoolStudents[i].lastName + " " + "(" + schoolStudents[i].studentId + ")" %></option>
+                      <% } %>
+                    </select>
                 </div>
                 
                 <div class="text-center">
@@ -45,6 +49,11 @@
         </main><!-- End #main -->
 
         <%- include('./partials/footer'); %>
+        <script>
+          $(document).ready(function() {
+              $('.studentSelect').select2();
+          });
+        </script>
 
   </body>
 

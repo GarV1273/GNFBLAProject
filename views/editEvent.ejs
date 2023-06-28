@@ -31,7 +31,7 @@
                 <div class="col-12">
                   <label for="eventNameEdit" class="form-label">Event Name</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Event selection" id="eventNameEdit" name="selectedId" required>
+                    <select class="eventSelect form-select" aria-label="Event selection" id="eventNameEdit" name="selectedId" required>
                       <option value="none" selected>(Select Event)</option>
                       <% for (let i = 0; i < schoolEvents.length; i++) { %>
                         <option value="<%= schoolEvents[i]._id %>"><%= schoolEvents[i].name %></option>
@@ -64,6 +64,11 @@
         </main><!-- End #main -->
 
         <%- include('./partials/footer'); %>
+        <script>
+          $(document).ready(function() {
+              $('.eventSelect').select2();
+          });
+        </script>
 
   </body>
 

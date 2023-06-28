@@ -30,7 +30,11 @@
               <form class="row g-3" action="/FBLA/EditStudent" method="POST">
                 <div class="col-12">
                   <label for="studentIdEdit" class="form-label">Student ID</label>
-                  <input type="number" class="form-control" id="studentIdEdit" name="studentId" required>
+                  <select class="studentIDSelect form-control" name="studentId">
+                    <% for (let i = 0; i < schoolStudents.length; i++) { %>
+                      <option value="<%= schoolStudents[i].studentId %>"><%= schoolStudents[i].studentId %></option>
+                    <% } %>
+                  </select>
                 </div>
                 <div class="col-12">
                     <label for="firstNameEdit" class="form-label">First Name</label>
@@ -42,7 +46,7 @@
                 </div>
                 <div class="col-12">
                     <label for="gradeEdit" class="form-label">Grade</label>
-                    <input type="number" class="form-control" id="gradeEdit" name="grade" required min="1" max="9">
+                    <input type="number" class="form-control" id="gradeEdit" name="grade" required min="1" max="12">
                 </div>
                 
                 <div class="text-center">
@@ -57,6 +61,12 @@
         </main><!-- End #main -->
 
         <%- include('./partials/footer'); %>
+
+        <script>
+          $(document).ready(function() {
+              $('.studentIDSelect').select2();
+          });
+        </script>
 
   </body>
 
